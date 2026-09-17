@@ -8,28 +8,80 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #020617;
-            color: #f8fafc;
+            background-color: #010409;
+            color: #f0f6fc;
             background-image: 
-                radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.25) 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 55%),
-                linear-gradient(rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.95)),
-                url("https://placehold.co/1920x1080/020617/0f172a?text=CLINICAL+RADIOGRAPHIC+GRID");
+                /* Advanced anatomical bone vectors, osteology grids, and DICOM coordinate markers filling negative spaces */
+                radial-gradient(circle at 12% 18%, rgba(14, 165, 233, 0.24) 0%, transparent 42%),
+                radial-gradient(circle at 88% 82%, rgba(37, 99, 235, 0.28) 0%, transparent 48%),
+                radial-gradient(circle at 82% 18%, rgba(56, 189, 248, 0.16) 0%, transparent 38%),
+                radial-gradient(circle at 18% 82%, rgba(20, 184, 166, 0.20) 0%, transparent 38%),
+                linear-gradient(rgba(3, 7, 18, 0.94), rgba(1, 4, 9, 0.98)),
+                url("https://placehold.co/1920x1080/010409/0b1329?text=%5B+DICOM+BONE+GRID+%2F+OSTEOLOGY+MAPPING+%2F+AXIAL+SKELETAL+CAD+%5D");
             background-blend-mode: overlay;
             background-size: cover;
             background-attachment: fixed;
         }
 
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(18px);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        /* Decorative anatomical / skeletal background watermark elements for negative space */
+        .bone-watermark-left {
+            position: fixed;
+            left: 1.5rem;
+            top: 52%;
+            transform: translateY(-50%);
+            width: 160px;
+            opacity: 0.055;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 12px #38bdf8);
+        }
+
+        .bone-watermark-right {
+            position: fixed;
+            right: 1.5rem;
+            top: 52%;
+            transform: translateY(-50%);
+            width: 160px;
+            opacity: 0.055;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 12px #38bdf8);
+        }
+
+        .bone-watermark-top-right {
+            position: fixed;
+            right: 4rem;
+            top: 5rem;
+            width: 220px;
+            opacity: 0.035;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 10px #22d3ee);
+        }
+
+        .bone-watermark-bottom-left {
+            position: fixed;
+            left: 4rem;
+            bottom: 3rem;
+            width: 200px;
+            opacity: 0.035;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 10px #22d3ee);
+        }
+
+        .clinical-panel {
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            position: relative;
+            z-index: 10;
         }
 
         .aspect-9-16 {
             aspect-ratio: 9 / 16;
-            max-height: 78vh;
+            max-height: 80vh;
         }
 
         input[type=range] {
@@ -41,57 +93,123 @@
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 128, 0.03), rgba(0, 128, 255, 0.05));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 128, 0.02), rgba(0, 128, 255, 0.04));
             z-index: 10;
             background-size: 100% 3px, 3px 100%;
             pointer-events: none;
             border-radius: 0.75rem;
         }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(3, 7, 18, 0.6);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.6);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-between p-3 md:p-6">
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-5 relative overflow-x-hidden">
 
-    <header class="w-full max-w-6xl text-center py-2 mb-1">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/90 border border-cyan-500/60 text-cyan-300 text-[11px] font-mono tracking-widest uppercase mb-1 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            Advanced Radiographic Suite v8.4 &bull; Double-Click Zoom &amp; Slow Pulse
+    <!-- Left Negative Space Watermark: Spinal & Pelvis Vector Outline -->
+    <svg class="bone-watermark-left hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="0.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8m-4-4h8" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 3v2m8-2v2" />
+    </svg>
+
+    <!-- Right Negative Space Watermark: Appendicular Bone Structure -->
+    <svg class="bone-watermark-right hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="0.8">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        <circle cx="12" cy="12" r="6" stroke-dasharray="2 2" />
+    </svg>
+
+    <!-- Top Right Negative Space Watermark: Craniofacial / Orthopedic Mapping Vector -->
+    <svg class="bone-watermark-top-right hidden xl:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="0.7">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 017.54 16.54l-1.54 1.46v2a1 1 0 01-1 1h-10a1 1 0 01-1-1v-2l-1.54-1.46A10 10 0 0112 2z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6" />
+    </svg>
+
+    <!-- Bottom Left Negative Space Watermark: Ribcage / Thoracic Grid Vector -->
+    <svg class="bone-watermark-bottom-left hidden xl:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="0.7">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 4h12M4 8h16M3 12h18M4 16h16M6 20h12" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20" />
+    </svg>
+
+    <header class="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pb-3 mb-2 border-b border-slate-800 gap-3 relative z-10">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-500/50 flex items-center justify-center text-cyan-400 shadow-inner">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/50 text-cyan-300 text-[10px] font-mono tracking-wider uppercase mb-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                    DICOM PACS Terminal &bull; v9.2 Live Suite
+                </div>
+                <h1 class="text-xl md:text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-blue-400">
+                    Clinical X-Ray &amp; Bone Analysis Workstation
+                </h1>
+            </div>
         </div>
-        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-blue-400">
-            Clinical X-Ray &amp; Bone Analysis
-        </h1>
-        <p class="text-slate-400 mt-0.5 text-xs">
-            Upload radiographs &bull; Click for high-contrast bone press &bull; Double-click to zoom target point. Sliders at 100% trigger total invisibility.
-        </p>
+
+        <div class="flex items-center gap-2 flex-wrap">
+            <label for="mediaInput" class="cursor-pointer bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold px-3.5 py-2 rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-1.5 text-xs">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                <span>Upload Radiograph</span>
+            </label>
+            <input type="file" id="mediaInput" accept="image/*,video/*" class="hidden">
+            
+            <button id="saveReportBtn" class="bg-teal-950/90 hover:bg-teal-900 text-teal-200 font-medium px-3 py-2 rounded-xl shadow transition text-xs border border-teal-600/50 flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                <span>Save Report</span>
+            </button>
+
+            <button id="exportImageBtn" class="bg-blue-950/90 hover:bg-blue-900 text-blue-200 font-medium px-3 py-2 rounded-xl shadow transition text-xs border border-blue-600/50 flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <span>Export DICOM PNG</span>
+            </button>
+        </div>
     </header>
 
-    <main class="w-full max-w-6xl flex-grow flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 my-2">
+    <main class="w-full max-w-7xl mx-auto flex-grow flex flex-col lg:flex-row items-center lg:items-start justify-center gap-5 my-1 relative z-10">
         
-        <div class="glass-panel w-full lg:w-96 p-4 rounded-2xl flex flex-col gap-4">
+        <!-- Left Sidebar: Controls & Archive -->
+        <div class="clinical-panel w-full lg:w-96 p-4 rounded-2xl flex flex-col gap-4">
             
-            <div class="flex items-center justify-between gap-3 flex-wrap pb-3 border-b border-slate-700/60">
-                <label for="mediaInput" class="cursor-pointer bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold px-3.5 py-2 rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2 text-xs">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                    </svg>
-                    <span>Upload Radiograph</span>
-                </label>
-                <input type="file" id="mediaInput" accept="image/*,video/*" class="hidden">
-                <span id="fileName" class="text-slate-400 text-xs truncate max-w-[110px]">No file chosen</span>
-                <button id="resetFilterBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-3 py-1.5 rounded-xl shadow transition text-xs border border-slate-700">
-                    Reset All
+            <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span id="fileName" class="text-xs font-mono text-slate-300 truncate max-w-[200px]">No file loaded</span>
+                </div>
+                <button id="resetFilterBtn" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-medium px-2.5 py-1.5 rounded-lg shadow transition text-[11px] border border-slate-700">
+                    Reset Suite
                 </button>
             </div>
 
-            <div id="filterControls" class="flex flex-col gap-3.5">
+            <!-- Filter Sliders Container -->
+            <div id="filterControls" class="flex flex-col gap-3">
                 <div class="flex items-center justify-between">
                     <p class="text-xs font-bold text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-                        Radiographic Parameter Sliders
+                        Radiographic Parameter Filters
                     </p>
-                    <span class="text-[10px] font-mono text-slate-500">0 – 100 Scale</span>
+                    <span class="text-[10px] font-mono text-slate-500">Scale 0 - 100</span>
                 </div>
                 
-                <div class="flex flex-col gap-1.5 bg-slate-900/70 p-2.5 rounded-xl border border-slate-800 relative overflow-hidden">
+                <!-- Contrast Slider -->
+                <div class="flex flex-col gap-1 bg-slate-900/80 p-3 rounded-xl border border-slate-800 relative overflow-hidden">
                     <div id="fadeIndicator" class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-400 w-0 transition-all duration-100"></div>
                     <div class="flex justify-between text-xs font-semibold">
                         <span class="text-purple-300 flex items-center gap-1.5">
@@ -104,7 +222,8 @@
                     <input type="range" id="contrastSlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
                 </div>
 
-                <div class="flex flex-col gap-1.5 bg-slate-900/70 p-2.5 rounded-xl border border-slate-800">
+                <!-- Ghostly Slider -->
+                <div class="flex flex-col gap-1 bg-slate-900/80 p-3 rounded-xl border border-slate-800">
                     <div class="flex justify-between text-xs font-semibold">
                         <span class="text-teal-300 flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -116,7 +235,8 @@
                     <input type="range" id="ghostlySlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
                 </div>
 
-                <div class="flex flex-col gap-1.5 bg-slate-900/70 p-2.5 rounded-xl border border-cyan-950">
+                <!-- Combined Slider -->
+                <div class="flex flex-col gap-1 bg-slate-900/80 p-3 rounded-xl border border-cyan-950">
                     <div class="flex justify-between text-xs font-semibold">
                         <span class="text-pink-300 flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -129,6 +249,7 @@
                 </div>
             </div>
 
+            <!-- Video Controls (Hidden unless video loaded) -->
             <div id="videoControls" class="hidden flex items-center gap-3 pt-2 border-t border-slate-800">
                 <button id="playPauseBtn" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl transition flex items-center justify-center border border-slate-700">
                     <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -137,9 +258,21 @@
                 </button>
                 <span id="timeDisplay" class="text-xs text-slate-300 font-mono">0:00 / 0:00</span>
             </div>
+
+            <!-- Saved Reports Archive List -->
+            <div class="pt-2 border-t border-slate-800 flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Saved Reports Archive</span>
+                    <span id="savedCountBadge" class="text-[10px] font-mono bg-cyan-950 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-800">0 Saved</span>
+                </div>
+                <div id="savedReportsList" class="max-h-40 overflow-y-auto flex flex-col gap-1.5 pr-1">
+                    <p class="text-[11px] text-slate-500 italic text-center py-3">No saved diagnostic reports yet.</p>
+                </div>
+            </div>
         </div>
 
-        <div class="glass-panel w-full max-w-sm md:max-w-md lg:max-w-none lg:flex-1 aspect-9-16 rounded-2xl overflow-hidden relative flex items-center justify-center p-2 xray-scanlines">
+        <!-- Right Main Viewport: Radiograph Canvas -->
+        <div class="clinical-panel w-full max-w-sm md:max-w-md lg:max-w-none lg:flex-1 aspect-9-16 rounded-2xl overflow-hidden relative flex items-center justify-center p-2 xray-scanlines">
             <div id="placeholderText" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 gap-3 p-6 text-center z-20 pointer-events-none">
                 <div class="w-16 h-16 rounded-full bg-cyan-950/80 border border-cyan-800/50 flex items-center justify-center text-cyan-400 shadow-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 opacity-75 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -148,13 +281,19 @@
                 </div>
                 <div>
                     <p class="text-sm font-semibold text-slate-200">No Radiograph Loaded</p>
-                    <p class="text-xs text-slate-400 mt-1">Upload an image &bull; Click for high-contrast bone press &bull; Double-click to zoom target point.</p>
+                    <p class="text-xs text-slate-400 mt-1">Upload DICOM/Image &bull; Click to apply 5s high-contrast bone press &bull; Double-click to zoom target point.</p>
                 </div>
             </div>
             <canvas id="mediaCanvas" class="w-full h-full object-contain rounded-xl z-0 cursor-crosshair"></canvas>
         </div>
 
     </main>
+
+    <!-- Notification Toast Message Box -->
+    <div id="notificationToast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 border border-cyan-500/60 text-cyan-200 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 text-xs pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-cyan-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span id="toastMessage">Action completed successfully.</span>
+    </div>
 
     <script>
         const mediaInput = document.getElementById('mediaInput');
@@ -177,6 +316,13 @@
         const playIcon = document.getElementById('playIcon');
         const timeDisplay = document.getElementById('timeDisplay');
 
+        const saveReportBtn = document.getElementById('saveReportBtn');
+        const exportImageBtn = document.getElementById('exportImageBtn');
+        const savedReportsList = document.getElementById('savedReportsList');
+        const savedCountBadge = document.getElementById('savedCountBadge');
+        const notificationToast = document.getElementById('notificationToast');
+        const toastMessage = document.getElementById('toastMessage');
+
         let currentMediaType = null; 
         let currentImage = null;
         let originalImageData = null;
@@ -190,6 +336,17 @@
 
         let pressMarks = [];
         let zoomState = { active: false, x: 0, y: 0, factor: 1.0 };
+        let savedReports = [];
+
+        function showToast(message) {
+            toastMessage.textContent = message;
+            notificationToast.classList.remove('translate-y-20', 'opacity-0');
+            notificationToast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                notificationToast.classList.remove('translate-y-0', 'opacity-100');
+                notificationToast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
 
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
@@ -247,6 +404,7 @@
                     drawImageToCanvas();
                     originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     applyFiltersAndRender();
+                    showToast('Radiograph loaded successfully.');
                 };
                 img.src = fileURL;
 
@@ -267,6 +425,7 @@
                     video.play().then(() => {
                         updatePlayIcon(true);
                         renderVideoLoop();
+                        showToast('Radiographic cine-loop loaded.');
                     }).catch(err => {
                         console.error("Auto-play prevented:", err);
                         updatePlayIcon(false);
@@ -274,12 +433,13 @@
                 });
             } else {
                 fileNameSpan.textContent = 'Invalid file type.';
+                showToast('Error: Please upload valid DICOM/image/video.');
             }
         });
 
         function drawImageToCanvas() {
             resizeCanvas();
-            ctx.fillStyle = '#020617';
+            ctx.fillStyle = '#010409';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             if (!currentImage) return;
@@ -403,7 +563,7 @@
             }
 
             if (intensity >= 100) {
-                ctx.fillStyle = '#020617';
+                ctx.fillStyle = '#010409';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 return;
             }
@@ -461,7 +621,7 @@
 
             const gradient = ctx.createRadialGradient(width/2, height/2, shorterSide * 0.05, width/2, height/2, shorterSide * 0.98);
             gradient.addColorStop(0, 'rgba(0,0,0,0)');
-            gradient.addColorStop(1, `rgba(0, 5, 20, ${Math.min(1.0, 0.45 + 0.55 * factor)})`);
+            gradient.addColorStop(1, `rgba(1, 5, 18, ${Math.min(1.0, 0.45 + 0.55 * factor)})`);
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, width, height);
         }
@@ -472,11 +632,10 @@
                 return;
             }
             if (intensity >= 100) {
-                ctx.fillStyle = '#020617';
+                ctx.fillStyle = '#010409';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 return;
             }
-            // Slowed down pulse frequency (0.0018 for calm, smooth cinematic breathing rhythm)
             const slowSineWave = 1.0 + 0.95 * Math.sin(timeElapsed * 0.0018);
             const adjustedIntensity = Math.min(100, Math.max(0, intensity * slowSineWave));
 
@@ -741,6 +900,7 @@
             drawImageToCanvas();
             originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             applyFiltersAndRender();
+            showToast(zoomState.active ? 'Target zone magnified (2.5x).' : 'Reset zoom magnification.');
         });
 
         contrastSlider.addEventListener('input', function() {
@@ -767,13 +927,101 @@
                 drawImageToCanvas();
                 originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             }
+            showToast('All radiographic filters & marks reset.');
+        });
+
+        saveReportBtn.addEventListener('click', function() {
+            if (!currentImage && !currentVideo) {
+                showToast('Error: No active radiograph to save.');
+                return;
+            }
+
+            const dataUrl = canvas.toDataURL('image/png');
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateStr = new Date().toLocaleDateString();
+            const reportId = 'REP-' + Math.floor(1000 + Math.random() * 9000);
+
+            const reportObj = {
+                id: reportId,
+                title: fileNameSpan.textContent || 'Radiograph Scan',
+                dateTime: `${dateStr} ${timestamp}`,
+                dataUrl: dataUrl
+            };
+
+            savedReports.unshift(reportObj);
+            if (savedReports.length > 10) savedReports.pop();
+            renderSavedReportsList();
+            showToast(`Report ${reportId} successfully archived.`);
+        });
+
+        function renderSavedReportsList() {
+            savedCountBadge.textContent = `${savedReports.length} Saved`;
+            if (savedReports.length === 0) {
+                savedReportsList.innerHTML = '<p class="text-[11px] text-slate-500 italic text-center py-3">No saved diagnostic reports yet.</p>';
+                return;
+            }
+
+            savedReportsList.innerHTML = '';
+            savedReports.forEach((rep, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between bg-slate-900/80 hover:bg-slate-800 p-2 rounded-xl border border-slate-800 transition text-xs gap-2';
+                item.innerHTML = `
+                    <div class="flex items-center gap-2 overflow-hidden cursor-pointer" title="Archived snapshot">
+                        <img src="${rep.dataUrl}" class="w-8 h-8 rounded object-cover border border-cyan-800/60 flex-shrink-0" />
+                        <div class="overflow-hidden">
+                            <p class="font-semibold text-cyan-300 truncate">${rep.id} &bull; ${rep.title}</p>
+                            <p class="text-[10px] text-slate-400">${rep.dateTime}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1 flex-shrink-0">
+                        <button onclick="downloadReport(${index})" class="p-1 hover:bg-cyan-950 text-cyan-400 rounded transition" title="Download PNG">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        </button>
+                        <button onclick="deleteReport(${index})" class="p-1 hover:bg-rose-950 text-rose-400 rounded transition" title="Delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </div>
+                `;
+                savedReportsList.appendChild(item);
+            });
+        }
+
+        window.downloadReport = function(index) {
+            const rep = savedReports[index];
+            if (!rep) return;
+            const link = document.createElement('a');
+            link.download = `${rep.id}_${rep.title.replace(/\.[^/.]+$/, "")}_analyzed.png`;
+            link.href = rep.dataUrl;
+            link.click();
+            showToast(`Downloading report ${rep.id}...`);
+        };
+
+        window.deleteReport = function(index) {
+            savedReports.splice(index, 1);
+            renderSavedReportsList();
+            showToast('Archived report deleted.');
+        };
+
+        exportImageBtn.addEventListener('click', function() {
+            if (!currentImage && !currentVideo) {
+                showToast('Error: No active canvas media to export.');
+                return;
+            }
+
+            const dataURL = canvas.toDataURL('image/png', 1.0);
+            const link = document.createElement('a');
+            const timestampTag = new Date().toISOString().slice(0,10);
+            link.download = `Clinical_XRay_Analysis_${timestampTag}.png`;
+            link.href = dataURL;
+            link.click();
+            showToast('High-resolution diagnostic image exported successfully.');
         });
 
         function renderVideoLoop() {
             if (currentMediaType !== 'video' || !currentVideo) return;
 
             resizeCanvas();
-            ctx.fillStyle = '#020617';
+            ctx.fillStyle = '#010409';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             const hRatio = canvas.width / currentVideo.videoWidth;
