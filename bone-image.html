@@ -8,23 +8,23 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #030712;
+            background-color: #020617;
             color: #f8fafc;
             background-image: 
-                radial-gradient(circle at 15% 20%, rgba(14, 116, 144, 0.2) 0%, transparent 40%),
-                radial-gradient(circle at 85% 80%, rgba(30, 58, 138, 0.25) 0%, transparent 50%),
-                linear-gradient(rgba(15, 23, 42, 0.85), rgba(3, 7, 18, 0.95)),
-                url("https://placehold.co/1920x1080/020617/0f172a?text=CLINICAL+BONE+GRID");
+                radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.3) 0%, transparent 55%),
+                linear-gradient(rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.95)),
+                url("https://placehold.co/1920x1080/020617/0f172a?text=CLINICAL+RADIOGRAPHIC+GRID");
             background-blend-mode: overlay;
             background-size: cover;
             background-attachment: fixed;
         }
 
         .glass-panel {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         .aspect-9-16 {
@@ -41,7 +41,7 @@
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 128, 0.03), rgba(0, 128, 255, 0.05));
             z-index: 10;
             background-size: 100% 3px, 3px 100%;
             pointer-events: none;
@@ -52,15 +52,15 @@
 <body class="min-h-screen flex flex-col items-center justify-between p-3 md:p-6">
 
     <header class="w-full max-w-6xl text-center py-2 mb-1">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/90 border border-cyan-600/60 text-cyan-400 text-[11px] font-mono tracking-widest uppercase mb-1 shadow-inner">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            Clinical Radiographic Diagnostic Suite v5.8
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-950/90 border border-cyan-500/60 text-cyan-300 text-[11px] font-mono tracking-widest uppercase mb-1 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            Advanced Radiographic Suite v8.4 &bull; Double-Click Zoom &amp; Slow Pulse
         </div>
-        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500">
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-blue-400">
             Clinical X-Ray &amp; Bone Analysis
         </h1>
         <p class="text-slate-400 mt-0.5 text-xs">
-            Upload radiographs. 5s temporal decay with inward/downward displacement afterimage reset.
+            Upload radiographs &bull; Click for high-contrast bone press &bull; Double-click to zoom target point. Sliders at 100% trigger total invisibility.
         </p>
     </header>
 
@@ -92,7 +92,7 @@
                 </div>
                 
                 <div class="flex flex-col gap-1.5 bg-slate-900/70 p-2.5 rounded-xl border border-slate-800 relative overflow-hidden">
-                    <div id="fadeIndicator" class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 to-cyan-400 w-0 transition-all duration-100"></div>
+                    <div id="fadeIndicator" class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-400 w-0 transition-all duration-100"></div>
                     <div class="flex justify-between text-xs font-semibold">
                         <span class="text-purple-300 flex items-center gap-1.5">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
@@ -100,7 +100,7 @@
                         </span>
                         <span id="contrastVal" class="text-cyan-400 font-mono">0</span>
                     </div>
-                    <p class="text-[10px] text-slate-400">5s timer decay &rarr; auto-resets to 0 with inward/downward displacement.</p>
+                    <p class="text-[10px] text-slate-400">5s timer decay &rarr; absolute invisibility at 100.</p>
                     <input type="range" id="contrastSlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
                 </div>
 
@@ -112,7 +112,7 @@
                         </span>
                         <span id="ghostlyVal" class="text-cyan-400 font-mono">0</span>
                     </div>
-                    <p class="text-[10px] text-slate-400">Enhanced Gaussian blur, spatial shift &amp; deep cyan/green phosphor glow.</p>
+                    <p class="text-[10px] text-slate-400">Deep phosphor glow &rarr; absolute invisibility at 100.</p>
                     <input type="range" id="ghostlySlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
                 </div>
 
@@ -124,7 +124,7 @@
                         </span>
                         <span id="combinedVal" class="text-cyan-400 font-mono">0</span>
                     </div>
-                    <p class="text-[10px] text-slate-400">High-contrast isolation with ghostly spatial memory &amp; vivid pulse wave.</p>
+                    <p class="text-[10px] text-slate-400">Bone isolation with slow cinematic pulse.</p>
                     <input type="range" id="combinedSlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
                 </div>
             </div>
@@ -140,7 +140,7 @@
         </div>
 
         <div class="glass-panel w-full max-w-sm md:max-w-md lg:max-w-none lg:flex-1 aspect-9-16 rounded-2xl overflow-hidden relative flex items-center justify-center p-2 xray-scanlines">
-            <div id="placeholderText" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 gap-3 p-6 text-center z-20">
+            <div id="placeholderText" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 gap-3 p-6 text-center z-20 pointer-events-none">
                 <div class="w-16 h-16 rounded-full bg-cyan-950/80 border border-cyan-800/50 flex items-center justify-center text-cyan-400 shadow-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 opacity-75 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -148,17 +148,13 @@
                 </div>
                 <div>
                     <p class="text-sm font-semibold text-slate-200">No Radiograph Loaded</p>
-                    <p class="text-xs text-slate-400 mt-1">Upload an image to begin 9:16 radiological analysis.</p>
+                    <p class="text-xs text-slate-400 mt-1">Upload an image &bull; Click for high-contrast bone press &bull; Double-click to zoom target point.</p>
                 </div>
             </div>
-            <canvas id="mediaCanvas" class="w-full h-full object-contain rounded-xl z-0"></canvas>
+            <canvas id="mediaCanvas" class="w-full h-full object-contain rounded-xl z-0 cursor-crosshair"></canvas>
         </div>
 
     </main>
-
-    <footer class="w-full max-w-6xl text-center py-1 text-xs text-slate-500 font-mono">
-        Clinical Radiographic Diagnostic Workstation &bull; Strict 9:16 Aspect Ratio
-    </footer>
 
     <script>
         const mediaInput = document.getElementById('mediaInput');
@@ -187,11 +183,13 @@
         let currentVideo = null;
         let animationFrameId = null;
 
-        // Temporal fading & 5s reset state variables
         let contrastActivationTimestamp = 0;
         let contrastEffectiveIntensity = 0;
         let contrastFadeInterval = null;
         let combinedAnimStartTime = null;
+
+        let pressMarks = [];
+        let zoomState = { active: false, x: 0, y: 0, factor: 1.0 };
 
         function resizeCanvas() {
             const rect = canvas.getBoundingClientRect();
@@ -217,6 +215,8 @@
 
             fileNameSpan.textContent = file.name;
             placeholderText.style.display = 'none';
+            pressMarks = [];
+            zoomState = { active: false, x: 0, y: 0, factor: 1.0 };
 
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
@@ -291,8 +291,22 @@
             const centerShiftX = (canvas.width - currentImage.width * ratio) / 2;
             const centerShiftY = (canvas.height - currentImage.height * ratio) / 2;
 
-            ctx.drawImage(currentImage, 0, 0, currentImage.width, currentImage.height,
-                          centerShiftX, centerShiftY, currentImage.width * ratio, currentImage.height * ratio);
+            if (zoomState.active) {
+                const zW = canvas.width / zoomState.factor;
+                const zH = canvas.height / zoomState.factor;
+                const zX = Math.max(0, Math.min(zoomState.x - zW / 2, canvas.width - zW));
+                const zY = Math.max(0, Math.min(zoomState.y - zH / 2, canvas.height - zH));
+
+                ctx.save();
+                ctx.drawImage(currentImage, 
+                    (zX - centerShiftX) / ratio, (zY - centerShiftY) / ratio, zW / ratio, zH / ratio,
+                    0, 0, canvas.width, canvas.height
+                );
+                ctx.restore();
+            } else {
+                ctx.drawImage(currentImage, 0, 0, currentImage.width, currentImage.height,
+                              centerShiftX, centerShiftY, currentImage.width * ratio, currentImage.height * ratio);
+            }
         }
 
         function computeHighContrastData(sourceImageData, intensity, decayFactor = 1.0) {
@@ -304,27 +318,34 @@
             const imgData = new ImageData(new Uint8ClampedArray(sourceImageData.data), width, height);
             const data = imgData.data;
 
+            if (intensity >= 100 && decayFactor >= 1.0) {
+                for (let i = 3; i < data.length; i += 4) {
+                    data[i] = 0;
+                }
+                return imgData;
+            }
+
             const gray = new Float32Array(width * height);
             for (let i = 0, p = 0; i < data.length; i += 4, p++) {
                 gray[p] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
             }
 
-            const powerExp = 1.0 + (factor * 11.0);
-            const thresholdCut = 25 + (90 * (1.0 - factor));
+            const powerExp = 2.4 + (factor * 32.0);
+            const thresholdCut = 10 + (140 * (1.0 - factor));
 
             const processedGray = new Float32Array(width * height);
             for (let p = 0; p < gray.length; p++) {
                 let val = gray[p] / 255.0;
                 val = Math.pow(val, powerExp);
-                let scaled = val * 255.0 * (2.8 + factor * 7.0);
+                let scaled = val * 255.0 * (10.0 + factor * 40.0);
                 if (scaled > 255) scaled = 255;
                 if (scaled < thresholdCut) scaled = 0;
                 processedGray[p] = scaled;
             }
 
             const sharpened = new Float32Array(width * height);
-            const kVal = -3.2 * factor;
-            const centerK = 1 + (13.8 * factor);
+            const kVal = -9.0 * factor;
+            const centerK = 1 + (38.0 * factor);
             const kernel = [
                  0, kVal,  0,
                 kVal, centerK, kVal,
@@ -342,18 +363,19 @@
                         }
                     }
                     let finalVal = Math.min(Math.max(sum, 0), 255);
-                    if (finalVal < (110 - 40 * factor)) finalVal = 0;
+                    if (finalVal < (80 - 20 * factor)) finalVal = 0;
                     else finalVal = 255;
                     sharpened[y * width + x] = finalVal;
                 }
             }
 
-            const downwardOffset = Math.round((1.0 - decayFactor) * 10);
+            const downwardOffset = Math.round((1.0 - decayFactor) * 26);
             const centerX = width / 2;
+            const globalAlphaFade = Math.max(0, 1.0 - (factor * 1.25));
 
             for (let y = 0; y < height; y++) {
                 for (let x = 0; x < width; x++) {
-                    const inwardOffsetX = Math.round((1.0 - decayFactor) * 5 * (x < centerX ? 1 : -1));
+                    const inwardOffsetX = Math.round((1.0 - decayFactor) * 16 * (x < centerX ? 1 : -1));
                     const srcY = Math.min(Math.max(y - downwardOffset, 0), height - 1);
                     const srcX = Math.min(Math.max(x - inwardOffsetX, 0), width - 1);
                     const srcIdx = (srcY * width + srcX);
@@ -365,10 +387,10 @@
                     const origB = sourceImageData.data[origIdx+2];
                     const boneVal = sharpened[srcIdx];
 
-                    data[origIdx]     = Math.min(255, origR + (boneVal - origR) * (0.95 * factor));
-                    data[origIdx + 1] = Math.min(255, origG + (boneVal - origG) * (0.95 * factor) + (65 * factor));
-                    data[origIdx + 2] = Math.min(255, origB + (boneVal - origB) * (0.95 * factor) + (105 * factor));
-                    data[origIdx + 3] = 255;
+                    data[origIdx]     = Math.min(255, (origR + (boneVal - origR) * (0.995 * factor)) * globalAlphaFade);
+                    data[origIdx + 1] = Math.min(255, (origG + (boneVal - origG) * (0.995 * factor) + (160 * factor)) * globalAlphaFade);
+                    data[origIdx + 2] = Math.min(255, (origB + (boneVal - origB) * (0.995 * factor) + (250 * factor)) * globalAlphaFade);
+                    data[origIdx + 3] = Math.round(255 * globalAlphaFade);
                 }
             }
             return imgData;
@@ -379,6 +401,13 @@
                 ctx.putImageData(sourceImageData, 0, 0);
                 return;
             }
+
+            if (intensity >= 100) {
+                ctx.fillStyle = '#020617';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+
             const factor = intensity / 100.0;
             const width = canvas.width;
             const height = canvas.height;
@@ -398,41 +427,41 @@
                 let b = data[i+2];
 
                 let lum = 0.299 * r + 0.587 * g + 0.114 * b;
-                lum = Math.min(255, lum * (0.75 - 0.35 * factor));
+                lum = Math.min(255, lum * (0.92 - 0.88 * factor));
 
-                data[i]   = Math.min(255, lum * (0.05 + 0.3 * factor));   
-                data[i+1] = Math.min(255, lum * (1.4 + 1.1 * factor));  
-                data[i+2] = Math.min(255, lum * (1.8 + 1.3 * factor));  
+                data[i]   = Math.min(255, lum * (0.01 + 0.45 * factor));   
+                data[i+1] = Math.min(255, lum * (2.8 + 3.2 * factor));  
+                data[i+2] = Math.min(255, lum * (4.0 + 4.2 * factor));  
             }
             tempCtx.putImageData(imgData, 0, 0);
 
-            ctx.fillStyle = '#010409';
+            ctx.fillStyle = '#000206';
             ctx.fillRect(0, 0, width, height);
 
             const shorterSide = Math.min(width, height);
-            const blurRadius = Math.max(2, Math.round(shorterSide * 0.12 * factor));
+            const blurRadius = Math.max(6, Math.round(shorterSide * 0.35 * factor));
             ctx.filter = `blur(${blurRadius}px)`;
 
             ctx.save();
-            ctx.globalAlpha = 0.7 + (0.3 * factor);
-            ctx.drawImage(tempCanvas, 14 * factor, -12 * factor);
+            ctx.globalAlpha = Math.max(0, (1.0 - factor * 0.98) * (0.95 + (0.3 * factor)));
+            ctx.drawImage(tempCanvas, 42 * factor, -36 * factor);
             ctx.restore();
 
-            ctx.filter = `blur(${Math.max(1, Math.round(blurRadius * 0.5))}px)`;
-            ctx.globalAlpha = 0.4 + (0.45 * factor);
-            ctx.drawImage(tempCanvas, 0, 0);
+            ctx.filter = `blur(${Math.max(3, Math.round(blurRadius * 0.5))}px)`;
+            ctx.globalAlpha = Math.max(0, (1.0 - factor * 0.98) * (0.75 + (0.35 * factor)));
+            ctx.drawImage(tempCanvas, -28 * factor, 30 * factor);
 
             ctx.filter = 'none';
             ctx.globalAlpha = 1.0;
 
-            ctx.fillStyle = `rgba(0, 255, 220, ${0.05 + 0.12 * factor})`;
-            for (let x = 0; x < width; x += 3) {
+            ctx.fillStyle = `rgba(0, 255, 245, ${Math.max(0, (1.0 - factor) * (0.22 + 0.4 * factor))})`;
+            for (let x = 0; x < width; x += 2) {
                 ctx.fillRect(x, 0, 1, height);
             }
 
-            const gradient = ctx.createRadialGradient(width/2, height/2, shorterSide * 0.1, width/2, height/2, shorterSide * 0.95);
+            const gradient = ctx.createRadialGradient(width/2, height/2, shorterSide * 0.05, width/2, height/2, shorterSide * 0.98);
             gradient.addColorStop(0, 'rgba(0,0,0,0)');
-            gradient.addColorStop(1, `rgba(0, 5, 15, ${0.5 + 0.5 * factor})`);
+            gradient.addColorStop(1, `rgba(0, 5, 20, ${Math.min(1.0, 0.45 + 0.55 * factor)})`);
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, width, height);
         }
@@ -442,13 +471,116 @@
                 ctx.putImageData(sourceImageData, 0, 0);
                 return;
             }
-            // Enhanced pulsation frequency and amplitude for a more noticeable wave effect
-            const sineWaveFactor = 1.0 + 0.25 * Math.sin(timeElapsed * 0.005);
-            const adjustedIntensity = Math.min(100, intensity * sineWaveFactor);
+            if (intensity >= 100) {
+                ctx.fillStyle = '#020617';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+            // Slowed down pulse frequency (0.0018 for calm, smooth cinematic breathing rhythm)
+            const slowSineWave = 1.0 + 0.95 * Math.sin(timeElapsed * 0.0018);
+            const adjustedIntensity = Math.min(100, Math.max(0, intensity * slowSineWave));
 
             let intermediateData = computeHighContrastData(sourceImageData, adjustedIntensity, 1.0);
             ctx.putImageData(intermediateData, 0, 0);
             renderGhostlyEffect(intermediateData, adjustedIntensity);
+        }
+
+        function applyPressMarksToImageData(baseImageData) {
+            if (!pressMarks || pressMarks.length === 0) return baseImageData;
+
+            const width = baseImageData.width;
+            const height = baseImageData.height;
+            const imgData = new ImageData(new Uint8ClampedArray(baseImageData.data), width, height);
+            const data = imgData.data;
+
+            const now = Date.now();
+            let activeMarks = [];
+
+            pressMarks.forEach(mark => {
+                const elapsed = (now - mark.activationTimestamp) / 1000.0;
+                if (elapsed >= 5.0) return;
+
+                const decayFactor = Math.max(0, 1.0 - (elapsed / 5.0));
+                activeMarks.push(mark);
+
+                const downwardShift = Math.round((1.0 - decayFactor) * 20);
+                const inwardShiftX = Math.round((1.0 - decayFactor) * 12 * (mark.x < width / 2 ? 1 : -1));
+
+                const cx = mark.x + inwardShiftX;
+                const cy = mark.y + downwardShift;
+                const radius = mark.radius * (0.8 + 0.2 * decayFactor);
+                const zoomFactor = 1.0 + (1.5 * decayFactor);
+
+                const gray = new Float32Array(width * height);
+                for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+                    gray[p] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+                }
+
+                const powerExp = 3.6;
+                const thresholdCut = 18;
+                const processedGray = new Float32Array(width * height);
+                for (let p = 0; p < gray.length; p++) {
+                    let val = gray[p] / 255.0;
+                    val = Math.pow(val, powerExp);
+                    let scaled = val * 255.0 * 18.0 * decayFactor;
+                    if (scaled > 255) scaled = 255;
+                    if (scaled < thresholdCut) scaled = 0;
+                    processedGray[p] = scaled;
+                }
+
+                const kVal = -8.5 * decayFactor;
+                const centerK = 1 + (34.0 * decayFactor);
+                const kernel = [
+                     0, kVal,  0,
+                    kVal, centerK, kVal,
+                     0, kVal,  0
+                ];
+
+                const startY = Math.max(0, Math.floor(cy - radius));
+                const endY = Math.min(height, Math.ceil(cy + radius));
+                const startX = Math.max(0, Math.floor(cx - radius));
+                const endX = Math.min(width, Math.ceil(cx + radius));
+
+                for (let y = startY; y < endY; y++) {
+                    for (let x = startX; x < endX; x++) {
+                        const dx = x - cx;
+                        const dy = y - cy;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist > radius) continue;
+
+                        const blendFactor = 1.0 - (dist / radius);
+                        const smoothWeight = blendFactor * blendFactor * (3.0 - 2.0 * blendFactor) * decayFactor;
+
+                        const srcXCoord = Math.min(Math.max(Math.round(cx + (x - cx) / zoomFactor), 0), width - 1);
+                        const srcYCoord = Math.min(Math.max(Math.round(cy + (y - cy) / zoomFactor), 0), height - 1);
+
+                        let sum = 0;
+                        for (let ky = -1; ky <= 1; ky++) {
+                            for (let kx = -1; kx <= 1; kx++) {
+                                const px = Math.min(Math.max(srcXCoord + kx, 0), width - 1);
+                                const py = Math.min(Math.max(srcYCoord + ky, 0), height - 1);
+                                sum += processedGray[py * width + px] * kernel[(ky + 1) * 3 + (kx + 1)];
+                            }
+                        }
+                        let boneVal = Math.min(Math.max(sum, 0), 255);
+                        if (boneVal < 50) boneVal = 0;
+                        else boneVal = 255;
+
+                        const p = y * width + x;
+                        const origIdx = p * 4;
+                        const origR = baseImageData.data[origIdx];
+                        const origG = baseImageData.data[origIdx+1];
+                        const origB = baseImageData.data[origIdx+2];
+
+                        data[origIdx]     = Math.min(255, origR + (boneVal - origR) * smoothWeight);
+                        data[origIdx + 1] = Math.min(255, origG + (boneVal - origG) * smoothWeight + (150 * smoothWeight));
+                        data[origIdx + 2] = Math.min(255, origB + (boneVal - origB) * smoothWeight + (240 * smoothWeight));
+                    }
+                }
+            });
+
+            pressMarks = activeMarks;
+            return imgData;
         }
 
         function applyFiltersAndRender() {
@@ -500,7 +632,7 @@
 
             contrastVal.textContent = contrastSlider.value;
             ghostlyVal.textContent = ghostlyValNum;
-            combinedVal.textContent = combinedValNum;
+            combinedVal.textContent = combinedSlider.value;
 
             let workingData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
 
@@ -509,9 +641,15 @@
                 const timeElapsed = Date.now() - combinedAnimStartTime;
                 renderCombinedEffect(workingData, combinedValNum, timeElapsed);
                 
+                if (pressMarks.length > 0 && combinedValNum < 100) {
+                    let currentCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    let markedData = applyPressMarksToImageData(currentCanvasData);
+                    ctx.putImageData(markedData, 0, 0);
+                }
+
                 if (!animationFrameId && currentMediaType === 'image') {
                     animationFrameId = requestAnimationFrame(function animLoop() {
-                        if (parseInt(combinedSlider.value) > 0 && currentMediaType === 'image') {
+                        if ((parseInt(combinedSlider.value) > 0 || pressMarks.length > 0) && currentMediaType === 'image') {
                             applyFiltersAndRender();
                             animationFrameId = requestAnimationFrame(animLoop);
                         } else {
@@ -533,11 +671,77 @@
                     renderGhostlyEffect(workingData, ghostlyValNum);
                 }
 
-                if (contrastSlider.value == 0 && ghostlyValNum === 0 && contrastEffectiveIntensity === 0) {
+                if (pressMarks.length > 0 && contrastEffectiveIntensity < 100 && ghostlyValNum < 100) {
+                    let currentCanvasData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    let markedData = applyPressMarksToImageData(currentCanvasData);
+                    ctx.putImageData(markedData, 0, 0);
+
+                    if (!animationFrameId && currentMediaType === 'image') {
+                        animationFrameId = requestAnimationFrame(function pressAnimLoop() {
+                            if (pressMarks.length > 0 && currentMediaType === 'image') {
+                                applyFiltersAndRender();
+                                animationFrameId = requestAnimationFrame(pressAnimLoop);
+                            } else {
+                                animationFrameId = null;
+                            }
+                        });
+                    }
+                }
+
+                if (contrastSlider.value == 0 && ghostlyValNum === 0 && contrastEffectiveIntensity === 0 && pressMarks.length === 0) {
                     drawImageToCanvas();
                 }
             }
         }
+
+        canvas.addEventListener('click', function(e) {
+            if (!currentImage || currentMediaType !== 'image') return;
+            if (parseInt(contrastSlider.value) >= 100 || parseInt(ghostlyVal.textContent) >= 100) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const canvasX = clickX * scaleX;
+            const canvasY = clickY * scaleY;
+            const pressRadius = Math.round(Math.min(canvas.width, canvas.height) * 0.2);
+
+            pressMarks.push({
+                x: canvasX,
+                y: canvasY,
+                radius: pressRadius,
+                activationTimestamp: Date.now()
+            });
+
+            applyFiltersAndRender();
+        });
+
+        canvas.addEventListener('dblclick', function(e) {
+            if (!currentImage || currentMediaType !== 'image') return;
+
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const canvasX = clickX * scaleX;
+            const canvasY = clickY * scaleY;
+
+            if (zoomState.active) {
+                zoomState = { active: false, x: 0, y: 0, factor: 1.0 };
+            } else {
+                zoomState = { active: true, x: canvasX, y: canvasY, factor: 2.5 };
+            }
+
+            drawImageToCanvas();
+            originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            applyFiltersAndRender();
+        });
 
         contrastSlider.addEventListener('input', function() {
             contrastActivationTimestamp = Date.now();
@@ -552,6 +756,8 @@
             combinedSlider.value = 0;
             contrastActivationTimestamp = 0;
             contrastEffectiveIntensity = 0;
+            pressMarks = [];
+            zoomState = { active: false, x: 0, y: 0, factor: 1.0 };
             fadeIndicator.style.width = '0%';
             if (contrastFadeInterval) {
                 clearInterval(contrastFadeInterval);
@@ -580,8 +786,19 @@
             ctx.drawImage(currentVideo, 0, 0, currentVideo.videoWidth, currentVideo.videoHeight,
                           centerShiftX, centerShiftY, currentVideo.videoWidth * ratio, currentVideo.videoHeight * ratio);
 
-            updateTimeDisplay();
-            animationFrameId = requestAnimationFrame(renderVideoLoop);
+            let ghostlyValNum = parseInt(ghostlySlider.value);
+            let combinedValNum = parseInt(combinedSlider.value);
+
+            if (combinedValNum > 0) {
+                renderCombinedEffect(ctx.getImageData(0, 0, canvas.width, canvas.height), combinedValNum, performance.now());
+            } else if (ghostlyValNum > 0) {
+                renderGhostlyEffect(ctx.getImageData(0, 0, canvas.width, canvas.height), ghostlyValNum);
+            }
+
+            if (!currentVideo.paused && !currentVideo.ended) {
+                animationFrameId = requestAnimationFrame(renderVideoLoop);
+                updateTimeDisplay();
+            }
         }
 
         playPauseBtn.addEventListener('click', function() {
@@ -589,9 +806,14 @@
             if (currentVideo.paused) {
                 currentVideo.play();
                 updatePlayIcon(true);
+                renderVideoLoop();
             } else {
                 currentVideo.pause();
                 updatePlayIcon(false);
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
             }
         });
 
@@ -603,18 +825,14 @@
             }
         }
 
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60);
-            const s = Math.floor(seconds % 60);
-            return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-
         function updateTimeDisplay() {
             if (!currentVideo) return;
-            timeDisplay.textContent = `${formatTime(currentVideo.currentTime)} / ${formatTime(currentVideo.duration || 0)}`;
+            const currentMin = Math.floor(currentVideo.currentTime / 60);
+            const currentSec = Math.floor(currentVideo.currentTime % 60);
+            const durMin = Math.floor(currentVideo.duration / 60) || 0;
+            const durSec = Math.floor(currentVideo.duration % 60) || 0;
+            timeDisplay.textContent = `${currentMin}:${currentSec < 10 ? '0' : ''}${currentSec} / ${durMin}:${durSec < 10 ? '0' : ''}${durSec}`;
         }
-
-        resizeCanvas();
     </script>
 </body>
 </html>
