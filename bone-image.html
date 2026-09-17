@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinical X-Ray & Bone Analysis Suite</title>
+    <title>Clinical X-Ray & Bone Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -11,63 +11,48 @@
             background-color: #010409;
             color: #f0f6fc;
             background-image: 
-                /* Advanced anatomical bone vectors, osteology grids, and DICOM coordinate markers filling negative spaces */
-                radial-gradient(circle at 12% 18%, rgba(14, 165, 233, 0.24) 0%, transparent 42%),
-                radial-gradient(circle at 88% 82%, rgba(37, 99, 235, 0.28) 0%, transparent 48%),
-                radial-gradient(circle at 82% 18%, rgba(56, 189, 248, 0.16) 0%, transparent 38%),
-                radial-gradient(circle at 18% 82%, rgba(20, 184, 166, 0.20) 0%, transparent 38%),
-                linear-gradient(rgba(3, 7, 18, 0.94), rgba(1, 4, 9, 0.98)),
-                url("https://placehold.co/1920x1080/010409/0b1329?text=%5B+DICOM+BONE+GRID+%2F+OSTEOLOGY+MAPPING+%2F+AXIAL+SKELETAL+CAD+%5D");
+                radial-gradient(circle at 15% 20%, rgba(14, 165, 233, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(37, 99, 235, 0.38) 0%, transparent 50%),
+                radial-gradient(circle at 80% 15%, rgba(56, 189, 248, 0.28) 0%, transparent 40%),
+                radial-gradient(circle at 20% 85%, rgba(20, 184, 166, 0.32) 0%, transparent 40%),
+                linear-gradient(rgba(3, 7, 18, 0.90), rgba(1, 4, 9, 0.96));
             background-blend-mode: overlay;
-            background-size: cover;
             background-attachment: fixed;
         }
 
-        /* Decorative anatomical / skeletal background watermark elements for negative space */
-        .bone-watermark-left {
+        /* Prominent X-Ray Diagnostic Figure in Bottom-Left Corner based on User Image */
+        .sample-watermark-bottom-left {
             position: fixed;
-            left: 1.5rem;
-            top: 52%;
-            transform: translateY(-50%);
-            width: 160px;
-            opacity: 0.055;
+            left: 2rem;
+            bottom: 2rem;
+            width: 280px;
+            opacity: 0.38; /* Increased opacity and contrast for prominence */
             pointer-events: none;
             z-index: 0;
-            filter: drop-shadow(0 0 12px #38bdf8);
+            filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.75));
         }
 
         .bone-watermark-right {
             position: fixed;
             right: 1.5rem;
-            top: 52%;
+            top: 54%;
             transform: translateY(-50%);
-            width: 160px;
-            opacity: 0.055;
+            width: 240px;
+            opacity: 0.22;
             pointer-events: none;
             z-index: 0;
-            filter: drop-shadow(0 0 12px #38bdf8);
+            filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.6));
         }
 
         .bone-watermark-top-right {
             position: fixed;
             right: 4rem;
-            top: 5rem;
-            width: 220px;
-            opacity: 0.035;
+            top: 4rem;
+            width: 280px;
+            opacity: 0.16;
             pointer-events: none;
             z-index: 0;
-            filter: drop-shadow(0 0 10px #22d3ee);
-        }
-
-        .bone-watermark-bottom-left {
-            position: fixed;
-            left: 4rem;
-            bottom: 3rem;
-            width: 200px;
-            opacity: 0.035;
-            pointer-events: none;
-            z-index: 0;
-            filter: drop-shadow(0 0 10px #22d3ee);
+            filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.5));
         }
 
         .clinical-panel {
@@ -119,29 +104,43 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between p-3 md:p-5 relative overflow-x-hidden">
 
-    <!-- Left Negative Space Watermark: Spinal & Pelvis Vector Outline -->
-    <svg class="bone-watermark-left hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="0.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8m-4-4h8" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 3v2m8-2v2" />
+    <!-- Prominent Sample-Based X-Ray Diagnostic Figure in Bottom-Left Corner with Cool-White Glow -->
+    <svg class="sample-watermark-bottom-left hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 380" fill="none">
+        <!-- Head Circle -->
+        <circle cx="150" cy="55" r="38" fill="#e0f2fe" fill-opacity="0.9" stroke="#7dd3fc" stroke-width="4"/>
+        <!-- Torso / Shoulders -->
+        <path d="M90 105 Q150 90 210 105 L225 130 L75 130 Z" fill="#e0f2fe" fill-opacity="0.85" stroke="#7dd3fc" stroke-width="3.5" stroke-linejoin="round"/>
+        <!-- Arms Outstretched -->
+        <path d="M85 115 L35 155 L45 168 L92 135 Z" fill="#e0f2fe" fill-opacity="0.85" stroke="#7dd3fc" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M215 115 L265 155 L255 168 L208 135 Z" fill="#e0f2fe" fill-opacity="0.85" stroke="#7dd3fc" stroke-width="3" stroke-linejoin="round"/>
+        <!-- Diagnostic X-Ray Screen Box -->
+        <rect x="75" y="125" width="150" height="115" rx="16" fill="#0284c7" fill-opacity="0.35" stroke="#38bdf8" stroke-width="5"/>
+        <!-- Ribcage Skeleton Inside Screen -->
+        <path d="M110 150 Q150 142 190 150" stroke="#f0fdf4" stroke-width="4" stroke-linecap="round"/>
+        <path d="M102 168 Q150 158 198 168" stroke="#f0fdf4" stroke-width="4" stroke-linecap="round"/>
+        <path d="M105 186 Q150 176 195 186" stroke="#f0fdf4" stroke-width="4" stroke-linecap="round"/>
+        <path d="M115 204 Q150 196 185 204" stroke="#f0fdf4" stroke-width="4" stroke-linecap="round"/>
+        <!-- Spine Center Line inside Screen -->
+        <line x1="150" y1="142" x2="150" y2="220" stroke="#f0fdf4" stroke-width="4.5" stroke-linecap="round"/>
+        <!-- Pelvis Outline -->
+        <path d="M125 212 Q150 228 175 212" stroke="#f0fdf4" stroke-width="4" stroke-linecap="round" fill="none"/>
+        <!-- Lower Body / Legs -->
+        <rect x="112" y="240" width="32" height="115" rx="14" fill="#e0f2fe" fill-opacity="0.85" stroke="#7dd3fc" stroke-width="3.5"/>
+        <rect x="156" y="240" width="32" height="115" rx="14" fill="#e0f2fe" fill-opacity="0.85" stroke="#7dd3fc" stroke-width="3.5"/>
     </svg>
 
-    <!-- Right Negative Space Watermark: Appendicular Bone Structure -->
-    <svg class="bone-watermark-right hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="0.8">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-        <circle cx="12" cy="12" r="6" stroke-dasharray="2 2" />
+    <svg class="bone-watermark-right hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="#7dd3fc" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M120 20 v200 M90 50 h60 M80 80 h80 M90 110 h60 M80 140 h80 M100 170 h40" stroke="#38bdf8" stroke-width="2.5" />
+        <circle cx="120" cy="50" r="8" fill="#38bdf8" fill-opacity="0.4" />
+        <circle cx="120" cy="80" r="8" fill="#38bdf8" fill-opacity="0.4" />
+        <circle cx="120" cy="110" r="8" fill="#38bdf8" fill-opacity="0.4" />
+        <circle cx="120" cy="140" r="8" fill="#38bdf8" fill-opacity="0.4" />
+        <circle cx="120" cy="170" r="8" fill="#38bdf8" fill-opacity="0.4" />
     </svg>
 
-    <!-- Top Right Negative Space Watermark: Craniofacial / Orthopedic Mapping Vector -->
-    <svg class="bone-watermark-top-right hidden xl:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="0.7">
+    <svg class="bone-watermark-top-right hidden xl:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#67e8f9" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 2a10 10 0 017.54 16.54l-1.54 1.46v2a1 1 0 01-1 1h-10a1 1 0 01-1-1v-2l-1.54-1.46A10 10 0 0112 2z" />
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6" />
-    </svg>
-
-    <!-- Bottom Left Negative Space Watermark: Ribcage / Thoracic Grid Vector -->
-    <svg class="bone-watermark-bottom-left hidden xl:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="0.7">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 4h12M4 8h16M3 12h18M4 16h16M6 20h12" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20" />
     </svg>
 
     <header class="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between pb-3 mb-2 border-b border-slate-800 gap-3 relative z-10">
@@ -194,7 +193,7 @@
                     <span id="fileName" class="text-xs font-mono text-slate-300 truncate max-w-[200px]">No file loaded</span>
                 </div>
                 <button id="resetFilterBtn" class="bg-slate-800/80 hover:bg-slate-700 text-slate-300 font-medium px-2.5 py-1.5 rounded-lg shadow transition text-[11px] border border-slate-700">
-                    Reset Suite
+                    Reset
                 </button>
             </div>
 
@@ -964,7 +963,7 @@
             savedReportsList.innerHTML = '';
             savedReports.forEach((rep, index) => {
                 const item = document.createElement('div');
-                item.className = 'flex items-center justify-between bg-slate-900/80 hover:bg-slate-800 p-2 rounded-xl border border-slate-800 transition text-xs gap-2';
+                item.className = 'flex items-center justify-between bg-slate-900/85 hover:bg-slate-800 p-2 rounded-xl border border-slate-800 transition text-xs gap-2';
                 item.innerHTML = `
                     <div class="flex items-center gap-2 overflow-hidden cursor-pointer" title="Archived snapshot">
                         <img src="${rep.dataUrl}" class="w-8 h-8 rounded object-cover border border-cyan-800/60 flex-shrink-0" />
