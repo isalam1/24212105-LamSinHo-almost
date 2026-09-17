@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical X-Ray &amp; Bone Media Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030712;
+            color: #f8fafc;
+        }
+        /* Glassmorphism for sleek medical equipment look */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        /* Enforce exact 9:16 aspect ratio container */
+        .aspect-9-16 {
+            aspect-ratio: 9 / 16;
+            max-height: 78vh;
+        }
+        /* Custom range track appearance */
+        input[type=range] {
+            accent-color: #38bdf8;
+        }
+        /* Scanline overlay for true X-ray aesthetic */
+        .xray-scanlines::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 10;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-between p-3 md:p-6">
+
+    <!-- Header -->
+    <header class="w-full max-w-6xl text-center py-2 mb-1">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/50 text-cyan-400 text-[11px] font-mono tracking-widest uppercase mb-1">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            Diagnostic Radiographic Suite v3.2
+        </div>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500">
+            Clinical X-Ray &amp; Bone Analysis
+        </h1>
+        <p class="text-slate-400 mt-0.5 text-xs">
+            Upload radiographs or anatomical media. Strict 9:16 analysis canvas with independent multi-stage radiographic filters.
+        </p>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="w-full max-w-6xl flex-grow flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 my-2">
+        
+        <!-- Left Column: Controls & Sliders (Always Available) -->
+        <div class="glass-panel w-full lg:w-96 p-4 rounded-2xl flex flex-col gap-4">
+            
+            <!-- File Uploader & Reset Bar -->
+            <div class="flex items-center justify-between gap-3 flex-wrap pb-3 border-b border-slate-700/60">
+                <label for="mediaInput" class="cursor-pointer bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold px-3.5 py-2 rounded-xl shadow-lg transition transform active:scale-95 flex items-center gap-2 text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    <span>Upload Radiograph</span>
+                </label>
+                <input type="file" id="mediaInput" accept="image/*,video/*" class="hidden">
+                <span id="fileName" class="text-slate-400 text-xs truncate max-w-[110px]">No file chosen</span>
+                <button id="resetFilterBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-3 py-1.5 rounded-xl shadow transition text-xs border border-slate-700">
+                    Reset All
+                </button>
+            </div>
+
+            <!-- Radiographic Filter Controls Panel -->
+            <div id="filterControls" class="flex flex-col gap-4">
+                <div class="flex items-center justify-between">
+                    <p class="text-xs font-bold text-cyan-300 uppercase tracking-wider flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                        Radiographic Parameter Sliders
+                    </p>
+                    <span class="text-[10px] font-mono text-slate-500">0 – 100 Scale</span>
+                </div>
+                
+                <!-- Filter 1: Enhance Bone High Contrast -->
+                <div class="flex flex-col gap-1.5 bg-slate-900/50 p-2.5 rounded-xl border border-slate-800">
+                    <div class="flex justify-between text-xs font-semibold">
+                        <span class="text-purple-300 flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                            Enhance Bone High Contrast
+                        </span>
+                        <span id="contrastVal" class="text-cyan-400 font-mono">0</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Midtone compression, binarization &amp; razor-sharp bone edge sharpening.</p>
+                    <input type="range" id="contrastSlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
+                </div>
+
+                <!-- Filter 2: Ghostly X-Ray Memory -->
+                <div class="flex flex-col gap-1.5 bg-slate-900/50 p-2.5 rounded-xl border border-slate-800">
+                    <div class="flex justify-between text-xs font-semibold">
+                        <span class="text-teal-300 flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            Ghostly X-Ray Memory
+                        </span>
+                        <span id="ghostlyVal" class="text-cyan-400 font-mono">0</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Large Gaussian blur, slight spatial shift &amp; cyan phosphor afterglow.</p>
+                    <input type="range" id="ghostlySlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
+                </div>
+
+                <!-- Filter 3: Combined Effect -->
+                <div class="flex flex-col gap-1.5 bg-slate-900/50 p-2.5 rounded-xl border border-cyan-950">
+                    <div class="flex justify-between text-xs font-semibold">
+                        <span class="text-pink-300 flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            Combined Effect
+                        </span>
+                        <span id="combinedVal" class="text-cyan-400 font-mono">0</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">Simultaneous high-contrast bone isolation layered with ghostly phosphor retention.</p>
+                    <input type="range" id="combinedSlider" min="0" max="100" value="0" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer mt-1">
+                </div>
+            </div>
+
+            <!-- Video Controls (Conditional) -->
+            <div id="videoControls" class="hidden flex items-center gap-3 pt-2 border-t border-slate-800">
+                <button id="playPauseBtn" class="bg-slate-800 hover:bg-slate-700 text-white p-2 rounded-xl transition flex items-center justify-center border border-slate-700">
+                    <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <span id="timeDisplay" class="text-xs text-slate-300 font-mono">0:00 / 0:00</span>
+            </div>
+        </div>
+
+        <!-- Right Column: Strict 9:16 Canvas Viewer with Scanlines -->
+        <div class="glass-panel w-full max-w-sm md:max-w-md lg:max-w-none lg:flex-1 aspect-9-16 rounded-2xl overflow-hidden relative flex items-center justify-center p-2 xray-scanlines">
+            <div id="placeholderText" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 gap-3 p-6 text-center z-20">
+                <div class="w-16 h-16 rounded-full bg-cyan-950/80 border border-cyan-800/50 flex items-center justify-center text-cyan-400 shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 opacity-75 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-slate-200">No Radiograph Loaded</p>
+                    <p class="text-xs text-slate-400 mt-1">Upload an image to begin 9:16 radiological analysis.</p>
+                </div>
+            </div>
+            <canvas id="mediaCanvas" class="w-full h-full object-contain rounded-xl z-0"></canvas>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-6xl text-center py-1 text-xs text-slate-500 font-mono">
+        Clinical Radiographic Diagnostic Workstation &bull; Strict 9:16 Aspect Ratio
+    </footer>
+
+    <!-- Script Application Logic -->
+    <script>
+        const mediaInput = document.getElementById('mediaInput');
+        const fileNameSpan = document.getElementById('fileName');
+        const canvas = document.getElementById('mediaCanvas');
+        const ctx = canvas.getContext('2d');
+        const placeholderText = document.getElementById('placeholderText');
+        const videoControls = document.getElementById('videoControls');
+        const resetFilterBtn = document.getElementById('resetFilterBtn');
+        
+        const contrastSlider = document.getElementById('contrastSlider');
+        const contrastVal = document.getElementById('contrastVal');
+        const ghostlySlider = document.getElementById('ghostlySlider');
+        const ghostlyVal = document.getElementById('ghostlyVal');
+        const combinedSlider = document.getElementById('combinedSlider');
+        const combinedVal = document.getElementById('combinedVal');
+
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playIcon = document.getElementById('playIcon');
+        const timeDisplay = document.getElementById('timeDisplay');
+
+        let currentMediaType = null; 
+        let currentImage = null;
+        let originalImageData = null;
+        let currentVideo = null;
+        let animationFrameId = null;
+
+        // Set canvas backing store resolution to maintain exact high fidelity 9:16 pixels
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const targetWidth = Math.round(rect.width || 360);
+            const targetHeight = Math.round(targetWidth * (16 / 9));
+            
+            if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            if (currentMediaType === 'image' && currentImage) {
+                applyFiltersAndRender();
+            }
+        });
+
+        // Handle file upload event
+        mediaInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            fileNameSpan.textContent = file.name;
+            placeholderText.style.display = 'none';
+
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            if (currentVideo) {
+                currentVideo.pause();
+                currentVideo = null;
+            }
+            currentImage = null;
+            originalImageData = null;
+
+            // Reset sliders on new upload
+            contrastSlider.value = 0; contrastVal.textContent = '0';
+            ghostlySlider.value = 0; ghostlyVal.textContent = '0';
+            combinedSlider.value = 0; combinedVal.textContent = '0';
+
+            const fileURL = URL.createObjectURL(file);
+
+            if (file.type.startsWith('image/')) {
+                currentMediaType = 'image';
+                videoControls.classList.add('hidden');
+
+                const img = new Image();
+                img.onload = function() {
+                    currentImage = img;
+                    drawImageToCanvas();
+                    originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                };
+                img.src = fileURL;
+
+            } else if (file.type.startsWith('video/')) {
+                currentMediaType = 'video';
+                videoControls.classList.remove('hidden');
+
+                const video = document.createElement('video');
+                video.src = fileURL;
+                video.crossOrigin = 'anonymous';
+                video.loop = true;
+                video.muted = false;
+                video.playsInline = true;
+
+                video.addEventListener('loadedmetadata', function() {
+                    currentVideo = video;
+                    updateTimeDisplay();
+                    video.play().then(() => {
+                        updatePlayIcon(true);
+                        renderVideoLoop();
+                    }).catch(err => {
+                        console.error("Auto-play prevented:", err);
+                        updatePlayIcon(false);
+                    });
+                });
+            } else {
+                fileNameSpan.textContent = 'Invalid file type.';
+            }
+        });
+
+        // Draw clean base image to canvas maintaining 9:16 aspect fit
+        function drawImageToCanvas() {
+            resizeCanvas();
+            ctx.fillStyle = '#030712';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (!currentImage) return;
+
+            const hRatio = canvas.width / currentImage.width;
+            const vRatio = canvas.height / currentImage.height;
+            const ratio = Math.min(hRatio, vRatio);
+
+            const centerShiftX = (canvas.width - currentImage.width * ratio) / 2;
+            const centerShiftY = (canvas.height - currentImage.height * ratio) / 2;
+
+            ctx.drawImage(currentImage, 0, 0, currentImage.width, currentImage.height,
+                          centerShiftX, centerShiftY, currentImage.width * ratio, currentImage.height * ratio);
+        }
+
+        // 1. Enhance Bone High Contrast Filter Algorithm
+        function computeHighContrastData(sourceImageData, intensity) {
+            if (intensity <= 0) return sourceImageData;
+            const factor = intensity / 100.0;
+
+            const imgData = new ImageData(new Uint8ClampedArray(sourceImageData.data), sourceImageData.width, sourceImageData.height);
+            const data = imgData.data;
+            const width = sourceImageData.width;
+            const height = sourceImageData.height;
+
+            const gray = new Float32Array(width * height);
+            for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+                gray[p] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+            }
+
+            const powerExp = 1.0 + (factor * 6.0);
+            const thresholdCut = 25 + (60 * (1.0 - factor));
+
+            const processedGray = new Float32Array(width * height);
+            for (let p = 0; p < gray.length; p++) {
+                let val = gray[p] / 255.0;
+                val = Math.pow(val, powerExp);
+                let scaled = val * 255.0 * (1.8 + factor * 3.2);
+                if (scaled > 255) scaled = 255;
+                if (scaled < thresholdCut) scaled = 0;
+                processedGray[p] = scaled;
+            }
+
+            const sharpened = new Float32Array(width * height);
+            const kernel = [
+                 0, -1.2 * factor,  0,
+                -1.2 * factor, 1 + (4.8 * factor), -1.2 * factor,
+                 0, -1.2 * factor,  0
+            ];
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    let sum = 0;
+                    for (let ky = -1; ky <= 1; ky++) {
+                        for (let kx = -1; kx <= 1; kx++) {
+                            const px = Math.min(Math.max(x + kx, 0), width - 1);
+                            const py = Math.min(Math.max(y + ky, 0), height - 1);
+                            sum += processedGray[py * width + px] * kernel[(ky + 1) * 3 + (kx + 1)];
+                        }
+                    }
+                    let finalVal = Math.min(Math.max(sum, 0), 255);
+                    if (finalVal < (110 - 25 * factor)) finalVal = 0;
+                    else finalVal = 255;
+                    sharpened[y * width + x] = finalVal;
+                }
+            }
+
+            for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+                const origR = sourceImageData.data[i];
+                const origG = sourceImageData.data[i+1];
+                const origB = sourceImageData.data[i+2];
+                const boneVal = sharpened[p];
+
+                data[i]     = origR + (boneVal - origR) * factor;
+                data[i + 1] = origG + (boneVal - origG) * factor;
+                data[i + 2] = origB + (boneVal - origB) * factor;
+                data[i + 3] = 255;
+            }
+            return imgData;
+        }
+
+        // 2. Ghostly X-Ray Memory Filter Algorithm
+        function renderGhostlyEffect(sourceImageData, intensity) {
+            if (intensity <= 0) {
+                ctx.putImageData(sourceImageData, 0, 0);
+                return;
+            }
+            const factor = intensity / 100.0;
+            const width = canvas.width;
+            const height = canvas.height;
+
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = width;
+            tempCanvas.height = height;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.putImageData(sourceImageData, 0, 0);
+
+            const imgData = tempCtx.getImageData(0, 0, width, height);
+            const data = imgData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i];
+                let g = data[i+1];
+                let b = data[i+2];
+
+                let lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                lum = Math.min(255, lum * (0.85 - 0.25 * factor));
+
+                // Sickly cyan-blue fluorescent phosphor shift
+                data[i]   = Math.min(255, lum * (0.15 + 0.35 * factor));   
+                data[i+1] = Math.min(255, lum * (1.15 + 0.55 * factor));  
+                data[i+2] = Math.min(255, lum * (1.35 + 0.65 * factor));  
+            }
+            tempCtx.putImageData(imgData, 0, 0);
+
+            ctx.fillStyle = '#020617';
+            ctx.fillRect(0, 0, width, height);
+
+            const shorterSide = Math.min(width, height);
+            const blurRadius = Math.max(1, Math.round(shorterSide * 0.06 * factor));
+            ctx.filter = `blur(${blurRadius}px)`;
+
+            const shiftX = (7 * factor);
+            const shiftY = (-6 * factor);
+            ctx.save();
+            ctx.globalAlpha = 0.6 + (0.35 * factor);
+            ctx.drawImage(tempCanvas, shiftX, shiftY);
+            ctx.restore();
+
+            ctx.filter = `blur(${Math.max(1, Math.round(blurRadius * 0.45))}px)`;
+            ctx.globalAlpha = 0.25 + (0.35 * factor);
+            ctx.drawImage(tempCanvas, 0, 0);
+
+            ctx.filter = 'none';
+            ctx.globalAlpha = 1.0;
+
+            // Fluorescent scanlines and vignette
+            ctx.fillStyle = `rgba(0, 255, 200, ${0.02 + 0.05 * factor})`;
+            for (let x = 0; x < width; x += 3) {
+                ctx.fillRect(x, 0, 1, height);
+            }
+
+            const gradient = ctx.createRadialGradient(width/2, height/2, shorterSide * 0.2, width/2, height/2, shorterSide * 0.85);
+            gradient.addColorStop(0, 'rgba(0,0,0,0)');
+            gradient.addColorStop(1, `rgba(0, 8, 18, ${0.4 + 0.55 * factor})`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+        }
+
+        // 3. Combined Effect Algorithm (High-Contrast + Ghostly Memory blended seamlessly)
+        function renderCombinedEffect(sourceImageData, intensity) {
+            if (intensity <= 0) {
+                ctx.putImageData(sourceImageData, 0, 0);
+                return;
+            }
+            // Step A: Apply high contrast boost scaled by combined intensity
+            let intermediateData = computeHighContrastData(sourceImageData, intensity);
+            ctx.putImageData(intermediateData, 0, 0);
+
+            // Step B: Render ghostly X-ray memory over the contrasted image
+            renderGhostlyEffect(intermediateData, intensity);
+        }
+
+        // Master Filter Pipeline responding to independent sliders
+        function applyFiltersAndRender() {
+            if (!originalImageData) return;
+
+            const contrastValNum = parseInt(contrastSlider.value);
+            const ghostlyValNum = parseInt(ghostlySlider.value);
+            const combinedValNum = parseInt(combinedSlider.value);
+
+            contrastVal.textContent = contrastValNum;
+            ghostlyVal.textContent = ghostlyValNum;
+            combinedVal.textContent = combinedValNum;
+
+            let workingData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
+
+            // Apply filters in sequence if active
+            if (contrastValNum > 0) {
+                workingData = computeHighContrastData(workingData, contrastValNum);
+            }
+
+            ctx.putImageData(workingData, 0, 0);
+
+            if (ghostlyValNum > 0) {
+                renderGhostlyEffect(workingData, ghostlyValNum);
+            }
+
+            if (combinedValNum > 0) {
+                renderCombinedEffect(originalImageData, combinedValNum);
+            }
+
+            if (contrastValNum === 0 && ghostlyValNum === 0 && combinedValNum === 0) {
+                drawImageToCanvas();
+            }
+        }
+
+        // Event Listeners for Sliders
+        contrastSlider.addEventListener('input', applyFiltersAndRender);
+        ghostlySlider.addEventListener('input', applyFiltersAndRender);
+        combinedSlider.addEventListener('input', applyFiltersAndRender);
+
+        // Reset All Button
+        resetFilterBtn.addEventListener('click', function() {
+            contrastSlider.value = 0;
+            ghostlySlider.value = 0;
+            combinedSlider.value = 0;
+            if (currentImage) {
+                drawImageToCanvas();
+                originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            }
+        });
+
+        // Video Loop Renderer
+        function renderVideoLoop() {
+            if (currentMediaType !== 'video' || !currentVideo) return;
+
+            resizeCanvas();
+            ctx.fillStyle = '#030712';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const hRatio = canvas.width / currentVideo.videoWidth;
+            const vRatio = canvas.height / currentVideo.videoHeight;
+            const ratio = Math.min(hRatio, vRatio);
+
+            const centerShiftX = (canvas.width - currentVideo.videoWidth * ratio) / 2;
+            const centerShiftY = (canvas.height - currentVideo.videoHeight * ratio) / 2;
+
+            ctx.drawImage(currentVideo, 0, 0, currentVideo.videoWidth, currentVideo.videoHeight,
+                          centerShiftX, centerShiftY, currentVideo.videoWidth * ratio, currentVideo.videoHeight * ratio);
+
+            updateTimeDisplay();
+            animationFrameId = requestAnimationFrame(renderVideoLoop);
+        }
+
+        playPauseBtn.addEventListener('click', function() {
+            if (!currentVideo) return;
+            if (currentVideo.paused) {
+                currentVideo.play();
+                updatePlayIcon(true);
+            } else {
+                currentVideo.pause();
+                updatePlayIcon(false);
+            }
+        });
+
+        function updatePlayIcon(isPlaying) {
+            if (isPlaying) {
+                playIcon.innerHTML = '<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />';
+            } else {
+                playIcon.innerHTML = '<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />';
+            }
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function updateTimeDisplay() {
+            if (!currentVideo) return;
+            timeDisplay.textContent = `${formatTime(currentVideo.currentTime)} / ${formatTime(currentVideo.duration || 0)}`;
+        }
+
+        resizeCanvas();
+    </script>
+</body>
+</html>
